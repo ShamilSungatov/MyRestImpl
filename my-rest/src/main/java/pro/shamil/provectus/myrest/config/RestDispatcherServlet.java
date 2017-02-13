@@ -1,5 +1,11 @@
 package pro.shamil.provectus.myrest.config;
 
+import pro.shamil.provectus.myrest.handler.http.HandlerEnum;
+import pro.shamil.provectus.myrest.repository.cache.InMemoryCache;
+import pro.shamil.provectus.myrest.repository.cache.RequestCacheItem;
+import pro.shamil.provectus.myrest.service.cache.CacheService;
+import pro.shamil.provectus.myrest.service.cache.CacheServiceI;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -13,7 +19,17 @@ import java.io.PrintWriter;
 public class RestDispatcherServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        boolean f = false;
 
+        if (f){
+            CacheServiceI serviceI = new CacheService();
+            String requestURI = req.getRequestURI();
+            String method =  req.getMethod();
+            HandlerEnum handlerEnum = HandlerEnum.valueOf(method);
+            RequestCacheItem requestCacheItem = new RequestCacheItem(handlerEnum, "dd");
+
+            new CacheService().putResponse(requestURI, requestCacheItem);
+        }
         PrintWriter writer = resp.getWriter();
         writer.print("HelloWorld");
     }

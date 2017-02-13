@@ -2,6 +2,7 @@ package pro.shamil.provectus.myrest.repository.cache;
 
 import pro.shamil.provectus.myrest.handler.http.HandlerEnum;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +27,8 @@ public final class InMemoryCache {
     public static RequestCacheItem find(String requestPath, HandlerEnum type) {
 
         List<RequestCacheItem> requestCacheItems = cacheMap.get(requestPath);
+        if (requestCacheItems == null || requestCacheItems.isEmpty()) return null;
+
         for (RequestCacheItem requestCacheItem : requestCacheItems) {
             if (requestCacheItem.isTypeEquals(type)){
                 return requestCacheItem;
@@ -34,25 +37,11 @@ public final class InMemoryCache {
         return null;
     }
 
-    public class RequestCacheItem{
-        private HandlerEnum type;
-        private String response;
-
-        public RequestCacheItem(HandlerEnum type, String response) {
-            this.type = type;
-            this.response = response;
-        }
-
-        public String getResponse() {
-            return response;
-        }
-
-        public boolean isTypeEquals(HandlerEnum type){
-            return this.type.equals(type);
-        }
-
-        public boolean isValid(){
-            return true; // todo replace plug
-        }
+    public static void put(String path, RequestCacheItem item) {
+        List<RequestCacheItem> requestCacheItems = getCacheMap().computeIfAbsent(path, k -> new ArrayList<>());
+        requestCacheItems.remove(item);
+        requestCacheItems.add(item);
     }
+
+
 }

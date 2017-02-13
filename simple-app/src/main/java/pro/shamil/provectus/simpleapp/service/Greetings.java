@@ -1,6 +1,7 @@
 package pro.shamil.provectus.simpleapp.service;
 
 
+import jdk.nashorn.internal.objects.annotations.Getter;
 import pro.shamil.provectus.myrest.annotation.Cache;
 import pro.shamil.provectus.myrest.annotation.RestResource;
 
