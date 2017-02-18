@@ -19,17 +19,20 @@ import java.io.PrintWriter;
  */
 public class RestDispatcherServlet extends HttpServlet {
 
+    private RestDispatcherResolver  restDispatcherResolver;
 
     @Override
     public void init() throws ServletException {
         RestAnnotationClassesResolver resolver = new RestAnnotationClassesResolver();
         resolver.init();
+
+        restDispatcherResolver = new RestDispatcherResolver();
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-
+        RestDispatcherResolver.resolve(req);
         if (Configuration.getINSTANCE().isCachingEnabled()){
             CacheServiceI serviceI = new CacheService();
             String requestURI = req.getRequestURI();
