@@ -15,7 +15,7 @@ public class Configuration extends AbstractConfiguration {
         return INSTANCE;
     }
 
-    private static boolean cachingEnabled = true;
+    private static boolean cachingEnabled = false;
     private static String restResourcesPackage= "";
 
 

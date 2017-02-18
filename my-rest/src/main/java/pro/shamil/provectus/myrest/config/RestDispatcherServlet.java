@@ -32,7 +32,7 @@ public class RestDispatcherServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        RestDispatcherResolver.resolve(req);
+        restDispatcherResolver.resolve(req);
         if (Configuration.getINSTANCE().isCachingEnabled()){
             CacheServiceI serviceI = new CacheService();
             String requestURI = req.getRequestURI();

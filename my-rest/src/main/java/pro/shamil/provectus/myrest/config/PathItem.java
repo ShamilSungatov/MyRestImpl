@@ -58,7 +58,13 @@ public class PathItem {
     }
 
     public void appendMainPath(String s) {
-        if (s!= null && !s.isEmpty())
-            this.path = s + "/" + this.path;
+        StringBuilder sb = new StringBuilder();
+        if (s!= null && !s.isEmpty()) {
+            sb.append(s);
+            if (path != null && !path.isEmpty())
+                sb.append("/");
+        }
+        sb.append(this.path);
+        this.path = sb.toString();
     }
 }

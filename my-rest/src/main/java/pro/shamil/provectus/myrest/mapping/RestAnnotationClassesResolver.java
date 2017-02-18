@@ -110,28 +110,32 @@ public class RestAnnotationClassesResolver extends AnnotationClassesResolver {
     }
 
     private void handleAnnotationType(List<Map.Entry<PathItem, Method>> list, Method method){
-        GET get = method.getDeclaredAnnotation(GET.class);
-        if (get != null){
-            for (Map.Entry<PathItem, Method> entry : list) {
-                entry.getKey().getType().add(HandlerEnum.GET);
-            }
-        }
+        boolean containAnyMethod = false;
         POST post = method.getDeclaredAnnotation(POST.class);
         if (post != null){
             for (Map.Entry<PathItem, Method> entry : list) {
                 entry.getKey().getType().add(HandlerEnum.POST);
             }
+            containAnyMethod = true;
         }
         PUT put = method.getDeclaredAnnotation(PUT.class);
         if (put != null){
             for (Map.Entry<PathItem, Method> entry : list) {
                 entry.getKey().getType().add(HandlerEnum.PUT);
             }
+            containAnyMethod = true;
         }
         DELETE delete = method.getDeclaredAnnotation(DELETE.class);
         if (delete != null){
             for (Map.Entry<PathItem, Method> entry : list) {
                 entry.getKey().getType().add(HandlerEnum.DELETE);
+            }
+            containAnyMethod = true;
+        }
+        GET get = method.getDeclaredAnnotation(GET.class);
+        if (get != null || !containAnyMethod){
+            for (Map.Entry<PathItem, Method> entry : list) {
+                entry.getKey().getType().add(HandlerEnum.GET);
             }
         }
     }
