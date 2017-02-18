@@ -23,7 +23,7 @@ public class RequestFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        if (Configuration.isCachingEnabled()){
+        if (Configuration.getINSTANCE().isCachingEnabled()){
             CacheServiceI serviceI = new CacheService();
             String requestURI = ((HttpServletRequest) servletRequest).getRequestURI();
             String method = ((HttpServletRequest) servletRequest).getMethod();
