@@ -1,3 +1,4 @@
 *.iml
 .idea
 simple-app/target
+*.class
